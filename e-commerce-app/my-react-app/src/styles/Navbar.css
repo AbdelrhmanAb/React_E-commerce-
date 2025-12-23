@@ -1,0 +1,23 @@
+.navbar-tabs{
+ text-decoration: none;
+ font-size: 25px;
+color: #000;
+/* background-color: aliceblue; */
+width: 150px;
+display: flex;
+justify-content: center;
+border-radius: 20px;
+transition: .5s;
+}
+
+
+.navbar-tabs:hover{
+    background-color: rgba(0, 0, 0,.2);
+
+}
+
+.navbar-tabs:focus{
+    background-color: rgba(0, 0, 0,.2);
+
+}
+
