@@ -20,7 +20,8 @@ function App() {
 
 
   return (
- <>
+ <div style={{maxWidth:"100vw",overflow:"hidden"}}>
+  {/* <ProductsProvider> */}
  <ThemeProvider theme={amazonTheme}>
   <CssBaseline/>
 <Router>
@@ -34,7 +35,8 @@ function App() {
   </Routes>
 </Router>
 </ThemeProvider>
- </>
+{/* </ProductsProvider> */}
+ </div>
   )
 }
 

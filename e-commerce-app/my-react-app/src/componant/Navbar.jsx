@@ -82,7 +82,7 @@ export default function Navbar() {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1 , }}>
+            <Box sx={{ flexGrow: 1  }}>
                 <AppBar position="fixed"
                 color="primary"
                 elevation={3}
@@ -100,7 +100,7 @@ export default function Navbar() {
                             <DiamondIcon sx={{ fontSize: "45px", color: "rgba(255, 247, 0, 1)" }} />
                         </IconButton>
                         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                            New Fashon
+                            New Fashion
                         </Typography>
                         <Box sx={{
                             width: "300px",
