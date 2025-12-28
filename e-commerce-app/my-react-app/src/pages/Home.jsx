@@ -15,10 +15,9 @@ import Tab from '@mui/material/Tab';
 import backgroundimg from "../assets/images/generative-ai-cloth-store-aesthetic-background-of-clothes-hanging-on-hangers-muted-neutral-colors-photo.jpg"
 
 ///////////////////////////////// //////////////// ///////////////// /////////
-import { useEffect, useState,useMemo } from 'react'
-import getProduct from '../services/api'
-import { getProductCard } from '../services/api';
+import {  useState,useMemo } from 'react'
 import Paper from '@mui/material/Paper'
+import useProducts from '../context/ProductsContext';
 
 
 import React from "react";
@@ -31,18 +30,8 @@ import Container from '@mui/material/Container';
 
 
 function ProductCarousel() {
+   const {products_1} = useProducts()
 
-    const [products, setProducts] = useState([])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getProduct();
-            setProducts(data);
-        };
-
-        fetchData();
-
-    }, [])
 
 
 
@@ -69,13 +58,13 @@ function ProductCarousel() {
             },
         ],
     };
-    if (products) {
+
 
 
         return (
             <Box sx={{ m: 4 }}>
                 <Slider {...settings}>
-                    {products.map((product) => (
+                    {products_1.map((product) => (
                         <Card key={product.id} sx={{ m: 1 }}>
                             <CardMedia
                                 component="img"
@@ -97,24 +86,30 @@ function ProductCarousel() {
             </Box>
         );
     }
-}
+
 
 
 
 export default function Home() {
+    const {products_2,loading}=useProducts()
 
-    const [productsGrid, setProductsGrid] = useState([])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getProductCard()
-            setProductsGrid(data)
-        }
-        fetchData()
-
-    }, [])
 
     const [complation, setComplation] = useState("all");
+
+
+    const filterProductsByCategory = useMemo(()=>{
+    
+
+        return products_2.filter((product)=>{
+            if (complation == "all"){return products_2;}
+
+            return product.category == complation
+
+        })
+
+    },[complation,products_2])
+
+    
 
     const handleChangeComp = (event, newValue) => {
         setComplation(newValue);
@@ -122,68 +117,7 @@ export default function Home() {
 
 
 
-    let filterProduct = productsGrid
-    
-    const filterProduct_Men = useMemo(()=>{
-        return productsGrid.filter((product)=>{
-            return product.category == "men's clothing"
-
-        })
-
-        
-
-    },[productsGrid])
-
-       
-        const filterProduct_Jewelery = useMemo(()=>{
-        return productsGrid.filter((product)=>{
-            return product.category == "jewelery"
-
-        })
-
-        
-
-    },[productsGrid])
-
-        const filterProduct_Electronics= useMemo(()=>{
-        return productsGrid.filter((product)=>{
-            return product.category == "electronics"
-
-        })
-
-        
-
-    },[productsGrid])
-
-
-        const filterProduct_Women= useMemo(()=>{
-        return productsGrid.filter((product)=>{
-            return product.category == "women's clothing"
-
-        })
-
-        
-
-    },[productsGrid])
-
-
-    if (complation === "men's clothing") {
-        filterProduct = filterProduct_Men
-        
-    }else if(complation === "jewelery"){
-        filterProduct = filterProduct_Jewelery
-
-    }else if(complation === "electronics"){
-        filterProduct = filterProduct_Electronics
-
-    }else if(complation === "women's clothing"){
-        filterProduct = filterProduct_Women
-
-    }
-
-    // console.log(prods);
-
-
+  
 
 
 
@@ -259,7 +193,7 @@ export default function Home() {
                     </Box>
                     <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-                        {filterProduct.map((product) => {
+                        {filterProductsByCategory.map((product) => {
 
                             return (
                                 <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>

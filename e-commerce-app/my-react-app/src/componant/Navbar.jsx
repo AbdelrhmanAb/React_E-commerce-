@@ -83,7 +83,7 @@ export default function Navbar() {
     return (
         <>
             <Box sx={{ flexGrow: 1  }}>
-                <AppBar position="fixed"
+                <AppBar position="sticky"
                 color="primary"
                 elevation={3}
                     
@@ -150,6 +150,7 @@ export default function Navbar() {
                             <Link to="/" className='navbar-tabs'> Home</Link>
                             <Link to="/shop" className='navbar-tabs'> Shop</Link>
                             <Link to="/contact" className='navbar-tabs'> Contact</Link>
+                            <Link to="/card" className='navbar-tabs'> Card</Link>
                         </Box>
                     </Toolbar>
                 </AppBar>

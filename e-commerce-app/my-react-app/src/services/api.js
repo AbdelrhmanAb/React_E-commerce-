@@ -4,7 +4,7 @@ import axios from "axios"
 const getProductCard = async () => {
     try {
         const response = await axios.get("https://fakestoreapi.com/products")
-        console.log(response.data.map(po =>po.category));
+        // console.log(response.data.map(po =>po.category));
 
 
         return response.data
