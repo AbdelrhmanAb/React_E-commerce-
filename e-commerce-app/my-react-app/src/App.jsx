@@ -3,8 +3,11 @@ import amazonTheme from './styles/theme/theme'
 import CssBaseline from '@mui/material/CssBaseline' 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+/////////////////////////////////////
 import { ProductsProvider } from './context/ProductsContext';
 import { ReducerProvider } from './context/CardContext';
+import { ToastProvider } from './context/ToastContext';
+/////////////////////////////////////
 import Home from './pages/Home'
 import CardPage from './pages/Card';
 
@@ -24,6 +27,8 @@ function App() {
 
   return (
  <div style={{maxWidth:"100vw",overflow:"hidden"}}>
+    <ToastProvider>
+
 <ProductsProvider>
   <ReducerProvider>
  <ThemeProvider theme={amazonTheme}>
@@ -43,6 +48,8 @@ function App() {
 </ThemeProvider>
 </ReducerProvider>
 </ProductsProvider>
+</ToastProvider>
+
  </div>
   )
 }

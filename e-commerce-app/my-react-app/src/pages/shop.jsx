@@ -19,6 +19,7 @@ import heroVideo from "../assets/videos/herovideo.mp4";
 
 
 import useProducts from '../context/ProductsContext';
+import useToast from '../context/ToastContext';
 
 const heights = [150, 300, 190, 270, 110, 150, 130, 180, 250, 190, 200, 150, 230, 150, 180];
 
@@ -38,11 +39,15 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Shop() {
 
+
     const {cardList,dispatch } = useCardProducts()
 
     const { products_2 } = useProducts()
 
+    const {ShowToast} = useToast()
+
     const handleAddToCard = (product)=>{
+        ShowToast({massege:"Addition product to Card is Success"})
 
         dispatch({type:"ADD",payload:{product}})
         
