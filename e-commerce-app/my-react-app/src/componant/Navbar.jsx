@@ -70,15 +70,12 @@ function a11yProps(index) {
 
 export default function Navbar() {
 
-    const [mobileOpen, setMobileOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const {proId,setProId} = useProductDetails()
 
 
 
-    const handleDrawerToggle = () => {
-        setMobileOpen((prevState) => !prevState);
-    };
+  
     const HandleTabs = (event, newValue) => {
         setTabValue(newValue)
     }
@@ -126,28 +123,6 @@ export default function Navbar() {
                             </IconButton>
                         </Box  >
 
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="men"
-                            onClick={handleDrawerToggle}
-                            sx={{ ml: 2, display: { md: "none" } }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        < Drawer
-                            anchor='left'
-                            open={mobileOpen}
-                            onClick={handleDrawerToggle}
-                        >
-                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                New Fashon
-                            </Typography>
-                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                New Fashon
-                            </Typography>
-                        </ Drawer>
                     </Toolbar>
                     <Toolbar>
                         <Box sx={{ width: '100%', display: 'flex', justifyContent: "space-evenly",gap:"20px" }}>
