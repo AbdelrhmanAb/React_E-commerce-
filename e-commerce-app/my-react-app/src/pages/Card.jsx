@@ -24,8 +24,8 @@ const CartPage = () => {
 const {ShowToast}=useToast()
 
     return (
-        <Container>
-            <Typography variant="h5" fontWeight="bold" mb={3}>
+        <div style={{minHeight:"100vh"}}>
+            <Typography variant="h2" sx={{background:"rgba(255, 191, 81, 1)",padding:"20px"}} fontWeight="bold" mb={3}>
                 Shopping Cart
             </Typography>
             <Box
@@ -135,7 +135,7 @@ const {ShowToast}=useToast()
                 })}
 
             </Box>
-        </Container >
+        </div >
     );
 };
 

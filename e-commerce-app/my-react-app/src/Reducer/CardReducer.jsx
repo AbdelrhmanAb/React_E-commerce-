@@ -41,6 +41,8 @@ const ReducerCard = (currentlist, action) => {
             })
         }
 
+    
+
 
 
         default: {
@@ -48,7 +50,6 @@ const ReducerCard = (currentlist, action) => {
         }
     }
 
-// console.log(currentlist);
 
 
 }

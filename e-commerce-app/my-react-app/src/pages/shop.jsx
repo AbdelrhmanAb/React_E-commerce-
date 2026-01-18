@@ -17,9 +17,12 @@ import Button from "@mui/material/Button";
 import Divider from '@mui/material/Divider';
 import heroVideo from "../assets/videos/herovideo.mp4";
 
+import { Link } from 'react-router-dom';
 
 import useProducts from '../context/ProductsContext';
 import useToast from '../context/ToastContext';
+import useProductDetails from '../context/Detailscontext';
+import Loading from '../componant/Loader';
 
 const heights = [150, 300, 190, 270, 110, 150, 130, 180, 250, 190, 200, 150, 230, 150, 180];
 
@@ -42,9 +45,12 @@ export default function Shop() {
 
     const {cardList,dispatch } = useCardProducts()
 
-    const { products_2 } = useProducts()
+    const { products_2 , loading} = useProducts()
 
     const {ShowToast} = useToast()
+    const {proId,setProId} = useProductDetails()
+    
+    
 
     const handleAddToCard = (product)=>{
         ShowToast({massege:"Addition product to Card is Success"})
@@ -53,7 +59,25 @@ export default function Shop() {
         
     }
 
-    return (<>
+       const handlePruductDetails = (id)=>{
+        setProId(id)
+        
+        ShowToast({massege:"DDETAL product to Card is Success"})
+
+    
+        
+    }
+
+    
+      if (loading) {
+        return (
+          <>
+          <Loading/>
+          </>
+        );
+      }
+
+    return (<div style={{minHeight:"100vh"}}>
      <Box
       sx={{
         position: "relative",
@@ -178,6 +202,11 @@ export default function Shop() {
                                             <Button onClick={()=>{handleAddToCard(product)}} variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
                                                 Add to Cart
                                             </Button>
+                                            <Link to={`/PruductDetails/${product.id}`}>
+                                             <Button onClick={()=>{handlePruductDetails(product.id)}} variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
+                                                show PruductDetails
+                                            </Button>
+                                            </Link>
                                         </CardContent>
                                     </CardContent>
 
@@ -189,6 +218,6 @@ export default function Shop() {
                 </Masonry>
             </Box>
         </Container>
-    </>);
+    </div>);
 
 }

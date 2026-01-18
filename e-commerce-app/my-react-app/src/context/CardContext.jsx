@@ -15,10 +15,21 @@ export default useCardProducts
 export function ReducerProvider({ children }) {
 
 
-    const getInitialCart = () => {
-        const storedCart = localStorage.getItem("cart");
-        return storedCart ? JSON.parse(storedCart) : [];
-    };
+ const getInitialCart = () => {
+  try {
+    const storedCart = localStorage.getItem("cart");
+
+    if (!storedCart || storedCart === "undefined") {
+      return [];
+    }
+
+    return JSON.parse(storedCart);
+  } catch (error) {
+    console.error("Invalid cart data in localStorage", error);
+    return [];
+  }
+};
+
 
 
     const [cardList, dispatch] = useReducer(ReducerCard, [],getInitialCart)

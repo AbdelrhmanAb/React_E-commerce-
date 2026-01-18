@@ -25,6 +25,7 @@ import Tab from '@mui/material/Tab';
 ////////////////////// ///////////// /////////// ///// //// //
 import "../styles/Navbar.css"
 import { Link } from 'react-router-dom';
+import useProductDetails from '../context/Detailscontext';
 
 ////////////////////// ///////////// /////////// ///// //// //
 import { useState } from 'react';
@@ -71,6 +72,9 @@ export default function Navbar() {
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
+    const {proId,setProId} = useProductDetails()
+
+
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
@@ -149,8 +153,9 @@ export default function Navbar() {
                         <Box sx={{ width: '100%', display: 'flex', justifyContent: "space-evenly",gap:"20px" }}>
                             <Link to="/" className='navbar-tabs'> Home</Link>
                             <Link to="/shop" className='navbar-tabs'> Shop</Link>
-                            <Link to="/contact" className='navbar-tabs'> Contact</Link>
                             <Link to="/card" className='navbar-tabs'> Card</Link>
+                            <Link to="/contact" className='navbar-tabs'> Contact</Link>
+
                         </Box>
                     </Toolbar>
                 </AppBar>

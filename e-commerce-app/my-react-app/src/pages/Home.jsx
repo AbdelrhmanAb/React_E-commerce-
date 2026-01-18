@@ -11,26 +11,29 @@ import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import {Tooltip } from '@mui/material';
+import Paper from '@mui/material/Paper'
 
 import backgroundimg from "../assets/images/generative-ai-cloth-store-aesthetic-background-of-clothes-hanging-on-hangers-muted-neutral-colors-photo.jpg"
 
 ///////////////////////////////// //////////////// ///////////////// /////////
-import {  useState,useMemo } from 'react'
-import Paper from '@mui/material/Paper'
+import { useState, useMemo } from 'react'
 import useProducts from '../context/ProductsContext';
 
 
 import React from "react";
 import Slider from "react-slick";
 import Container from '@mui/material/Container';
-
+import useCardProducts from '../context/CardContext';
+import useToast from '../context/ToastContext';
+import Loading from '../componant/Loader';
 ////////////// ///////////// //////// //////////
 
 
 
 
 function ProductCarousel() {
-   const {products_1} = useProducts()
+    const { products_1 } = useProducts()
 
 
 
@@ -61,63 +64,81 @@ function ProductCarousel() {
 
 
 
-        return (
-            <Box sx={{ m: 4 }}>
-                <Slider {...settings}>
-                    {products_1.map((product) => (
-                        <Card key={product.id} sx={{ m: 1 }}>
-                            <CardMedia
-                                component="img"
-                                height="340"
-                                width={"100%"}
-                                image={product.images[0]}
-                                alt={product.title}
-                            />
-                            <CardContent>
-                                <Typography variant="h6">{product.title}</Typography>
-                                <Typography variant="subtitle1">${product.price}</Typography>
-                                <Button variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
-                                    Add to Cart
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Slider>
-            </Box>
-        );
-    }
+    return (
+        <Box sx={{ m: 4 }}>
+            <Slider {...settings}>
+                {products_1.map((product) => (
+                    <Card key={product.id} sx={{ m: 1 }}>
+                        <CardMedia
+                            component="img"
+                            height="340"
+                            width={"100%"}
+                            image={product.images[0]}
+                            alt={product.title}
+                        />
+                        <CardContent>
+                            <Typography variant="h6">{product.title}</Typography>
+                            <Typography variant="subtitle1">${product.price}</Typography>
+                            <Tooltip title="This product only read" arrow >
+                            <Button variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
+                                Add to Cart
+                            </Button>
+                            </Tooltip>
+                        </CardContent>
+                    </Card>
+                ))}
+            </Slider>
+        </Box>
+    );
+}
 
 
 
 
 export default function Home() {
-    const {products_2,loading}=useProducts()
+    const { products_2, loading } = useProducts()
+    const {ShowToast} = useToast()
+    const {cardList,dispatch } = useCardProducts()
+
+
+    const handleAddToCard = (product) => {
+        ShowToast({ massege: "Addition product to Card is Success" })
+
+        dispatch({ type: "ADD", payload: { product } })
+
+    }
 
 
     const [complation, setComplation] = useState("all");
 
 
-    const filterProductsByCategory = useMemo(()=>{
-    
+    const filterProductsByCategory = useMemo(() => {
 
-        return products_2.filter((product)=>{
-            if (complation == "all"){return products_2;}
+
+        return products_2.filter((product) => {
+            if (complation == "all") { return products_2; }
 
             return product.category == complation
 
         })
 
-    },[complation,products_2])
+    }, [complation, products_2])
 
-    
+
 
     const handleChangeComp = (event, newValue) => {
         setComplation(newValue);
     };
 
 
+  if (loading) {
+    return (
+      <>
+      <Loading/>
+      </>
+    );
+  }
 
-  
 
 
 
@@ -127,8 +148,8 @@ export default function Home() {
                 sx={{
                     width: "100vw",
                     height: "atue",
-                    overflow:"hidden"
-                
+                    overflow: "hidden"
+
 
                 }}
 
@@ -233,7 +254,11 @@ export default function Home() {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardContent>
-                                            <Button variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
+                                            <Button 
+                                            onClick={()=>{handleAddToCard(product)}}
+                                            variant="contained"
+                                             color="primary"
+                                              fullWidth sx={{ mt: 1 }}>
                                                 Add to Cart
                                             </Button>
                                         </CardContent>
