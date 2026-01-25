@@ -26,6 +26,7 @@ import Tab from '@mui/material/Tab';
 import "../styles/Navbar.css"
 import { Link } from 'react-router-dom';
 import useProductDetails from '../context/Detailscontext';
+import useCardProducts from '../context/CardContext';
 
 ////////////////////// ///////////// /////////// ///// //// //
 import { useState } from 'react';
@@ -71,11 +72,13 @@ function a11yProps(index) {
 export default function Navbar() {
 
     const [tabValue, setTabValue] = useState(0);
-    const {proId,setProId} = useProductDetails()
+    const { proId, setProId } = useProductDetails()
+    const { cardList } = useCardProducts()
+    const productNum = cardList.length
 
 
 
-  
+
     const HandleTabs = (event, newValue) => {
         setTabValue(newValue)
     }
@@ -83,11 +86,11 @@ export default function Navbar() {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1  }}>
+            <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="sticky"
-                color="primary"
-                elevation={3}
-                    
+                    color="primary"
+                    elevation={3}
+
 
                 >
                     <Toolbar>
@@ -105,12 +108,36 @@ export default function Navbar() {
                         </Typography>
                         <Box sx={{
                             width: "300px",
-                            display: {md:"flex",sm:"none"},
+                            display: { md: "flex", sm: "none" },
                             gap: "30px",
-                            
+
 
                         }} >
-                            <IconButton size="large" color="inherit">
+                            <IconButton
+                                sx={{ position: "relative" }}
+                                size="large" color="inherit">
+
+                                <Box
+
+                                    sx={{
+                                        position: "absolute",
+                                        borderRadius: "50%",
+                                        width: "22px",
+                                        height: "22px",
+                                        top: "00px",
+                                        right: "15px",
+                                        fontSize: "18px",
+                                        bgcolor: "error.main",
+                                        color: "rgb(192, 248, 164)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        display: productNum ? "block" : "none"
+                                    }}
+                                >
+                                    {productNum}
+                                </Box>
+
                                 <ShoppingCartIcon sx={{ fontSize: "35px" }} />
                             </IconButton>
                             <IconButton size='large' color="inherit">
@@ -125,7 +152,7 @@ export default function Navbar() {
 
                     </Toolbar>
                     <Toolbar>
-                        <Box sx={{ width: '100%', display: 'flex', justifyContent: "space-evenly",gap:"20px" }}>
+                        <Box sx={{ width: '100%', display: 'flex', justifyContent: "space-evenly", gap: "20px" }}>
                             <Link to="/" className='navbar-tabs'> Home</Link>
                             <Link to="/shop" className='navbar-tabs'> Shop</Link>
                             <Link to="/card" className='navbar-tabs'> Card</Link>

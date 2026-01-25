@@ -21,16 +21,16 @@ const CartPage = () => {
     const { cardList, dispatch } = useCardProducts()
 
     // console.log(cardList);
-const {ShowToast}=useToast()
+    const { ShowToast } = useToast()
 
     return (
-        <div style={{minHeight:"100vh"}}>
-            <Typography variant="h2" sx={{background:"rgba(255, 191, 81, 1)",padding:"20px"}} fontWeight="bold" mb={3}>
+        <div style={{ minHeight: "100vh" }}>
+            <Typography variant="h2" sx={{ background: "rgba(255, 191, 81, 1)", padding: "20px" }} fontWeight="bold" mb={3}>
                 Shopping Cart
             </Typography>
             <Box
                 sx={{
-                    maxWidth: "100vw",
+                    maxWidth: "80vw",
                     mx: "auto",
 
                     display: "grid",
@@ -41,22 +41,27 @@ const {ShowToast}=useToast()
 
                 {cardList.map((product) => {
                     return (
-                        <Box key={product.id} sx={{
-                            background: "rgba(166, 0, 83, 0.27)",
+                        <Box key={product.id}
+                            sx={{
 
-                            maxWidth: 800,
-                            mx: "auto",
-                            p: "10px",
-                            borderRadius: 3
-                        }}>
+                                bgcolor: "primary.main",
+                                maxWidth: 800,
+                                mx: "auto",
+                                p: "10px 0 0 0",
+                                borderRadius: 3
+                            }}>
 
 
                             {/* Product Item */}
-                            <Card sx={{ mb: 2, borderRadius: 3, }}>
+                            <Card sx={{
+                                height: "100%",
+                                borderRadius: 3
+
+                            }}>
                                 <CardContent>
                                     <Stack direction="row" spacing={2} alignItems="center">
                                         <Avatar
-                                            src={product.image}
+                                            src={ product.image ? product.image : product.images[0]   }
                                             variant="rounded"
                                             sx={{ width: 80, height: 80 }}
                                         />
@@ -94,17 +99,15 @@ const {ShowToast}=useToast()
                                             color="error"
 
                                             onClick={() => {
-                                                ShowToast({massege:"DELETE   product to Card is Success"})
+                                                ShowToast({ massege: "DELETE   product to Card is Success" })
                                                 dispatch({ type: "delete", payload: product.id })
                                             }}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Stack>
                                 </CardContent>
-                            </Card>
 
-                            {/* Summary */}
-                            <Card sx={{ borderRadius: 3 }}>
+                                {/* Summary */}
                                 <CardContent>
                                     <Stack spacing={2}>
                                         <Stack direction="row" justifyContent="space-between">
@@ -124,7 +127,7 @@ const {ShowToast}=useToast()
                                             <Typography fontWeight="bold">{(product.price / 2) * 3 + "0"}EGP</Typography>
                                         </Stack>
 
-                                        <Button variant="contained" size="large" fullWidth>
+                                        <Button variant="contained" color="primary" size="large" fullWidth>
                                             Checkout
                                         </Button>
                                     </Stack>

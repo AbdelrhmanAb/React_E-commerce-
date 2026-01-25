@@ -45,7 +45,8 @@ export default function Shop() {
 
     const {cardList,dispatch } = useCardProducts()
 
-    const { products_2 , loading} = useProducts()
+    const { products_All,loading} = useProducts()
+ 
 
     const {ShowToast} = useToast()
     const {proId,setProId} = useProductDetails()
@@ -62,7 +63,7 @@ export default function Shop() {
        const handlePruductDetails = (id)=>{
         setProId(id)
         
-        ShowToast({massege:"DDETAL product to Card is Success"})
+        ShowToast({massege:"Diatals Page"})
 
     
         
@@ -139,7 +140,7 @@ export default function Shop() {
                     defaultColumns={4}
                     defaultSpacing={1}
                 >
-                    {products_2.map((product) => (
+                    {products_All.map((product) => (
                         <Item key={product.id} sx={{ height: "400px" }}>
                             <div style={{ overflow: "hidden" }}>
 
@@ -156,7 +157,7 @@ export default function Shop() {
                                     <CardMedia
                                         component="img"
                                         height="400"
-                                        image={product.image}
+                                        image={product.image?product.image:product.images[0]}
                                         alt="green iguana"
                                     />
                                     <CardContent

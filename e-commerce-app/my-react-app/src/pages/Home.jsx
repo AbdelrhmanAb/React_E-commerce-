@@ -11,7 +11,8 @@ import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {Tooltip } from '@mui/material';
+import { Tooltip } from '@mui/material';
+import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper'
 
 import backgroundimg from "../assets/images/generative-ai-cloth-store-aesthetic-background-of-clothes-hanging-on-hangers-muted-neutral-colors-photo.jpg"
@@ -27,14 +28,34 @@ import Container from '@mui/material/Container';
 import useCardProducts from '../context/CardContext';
 import useToast from '../context/ToastContext';
 import Loading from '../componant/Loader';
+import useProductDetails from '../context/Detailscontext';
 ////////////// ///////////// //////// //////////
 
 
 
 
 function ProductCarousel() {
+    
     const { products_1 } = useProducts()
+    const { ShowToast } = useToast()
+    const { cardList, dispatch } = useCardProducts()
+    const { proId, setProId } = useProductDetails()
 
+    const handleAddToCard = (product) => {
+        ShowToast({ massege: "Addition product to Card is Success" })
+
+        dispatch({ type: "ADD", payload: { product } })
+
+    }
+
+    const handlePruductDetails = (id) => {
+        setProId(id)
+
+        ShowToast({ massege: "Diatals Page" })
+
+
+
+    }
 
 
 
@@ -80,9 +101,14 @@ function ProductCarousel() {
                             <Typography variant="h6">{product.title}</Typography>
                             <Typography variant="subtitle1">${product.price}</Typography>
                             <Tooltip title="This product only read" arrow >
-                            <Button variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
-                                Add to Cart
-                            </Button>
+                                <Button
+                                    onClick={() => { handleAddToCard(product) }}
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth sx={{ mt: 1 }}>
+                                    Add to Cart
+                                </Button>
+                         
                             </Tooltip>
                         </CardContent>
                     </Card>
@@ -97,14 +123,24 @@ function ProductCarousel() {
 
 export default function Home() {
     const { products_2, loading } = useProducts()
-    const {ShowToast} = useToast()
-    const {cardList,dispatch } = useCardProducts()
+    const { ShowToast } = useToast()
+    const { cardList, dispatch } = useCardProducts()
+    const { proId, setProId } = useProductDetails()
 
 
     const handleAddToCard = (product) => {
         ShowToast({ massege: "Addition product to Card is Success" })
 
         dispatch({ type: "ADD", payload: { product } })
+
+    }
+
+    const handlePruductDetails = (id) => {
+        setProId(id)
+
+        ShowToast({ massege: "Diatals Page" })
+
+
 
     }
 
@@ -131,13 +167,13 @@ export default function Home() {
     };
 
 
-  if (loading) {
-    return (
-      <>
-      <Loading/>
-      </>
-    );
-  }
+    if (loading) {
+        return (
+            <>
+                <Loading />
+            </>
+        );
+    }
 
 
 
@@ -219,7 +255,7 @@ export default function Home() {
                             return (
                                 <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
                                     {/* <Item> */}
-                                    <Card sx={{ height: "720px" }}>
+                                    <Card sx={{ height: "750px" }}>
                                         <CardActionArea>
                                             <div style={{ overflow: "hidden" }}>
                                                 <CardMedia
@@ -254,13 +290,18 @@ export default function Home() {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardContent>
-                                            <Button 
-                                            onClick={()=>{handleAddToCard(product)}}
-                                            variant="contained"
-                                             color="primary"
-                                              fullWidth sx={{ mt: 1 }}>
+                                            <Button
+                                                onClick={() => { handleAddToCard(product) }}
+                                                variant="contained"
+                                                color="primary"
+                                                fullWidth sx={{ mt: 1 }}>
                                                 Add to Cart
                                             </Button>
+                                            <Link to={`/PruductDetails/${product.id}`}>
+                                                <Button onClick={() => { handlePruductDetails(product.id) }} variant="contained" color="primary" fullWidth sx={{ mt: 1 }}>
+                                                    show PruductDetails
+                                                </Button>
+                                            </Link>
                                         </CardContent>
                                     </Card>
 
